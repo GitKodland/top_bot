@@ -1,0 +1,98 @@
+import discord
+import random
+import time
+
+# Переменная intents - хранит привилегии бота
+intents = discord.Intents.default()
+# Включаем привелегию на чтение сообщений
+intents.message_content = True
+# Создаем бота в переменной client и передаем все привелегии
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+def gen_pass(pass_length):
+    elements = "+-/*!&$#?=@<>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    password = ""
+
+    for i in range(pass_length):
+        password += random.choice(elements)
+
+    return password
+def localtime():
+    seconds = time.time()
+    local_time = time.ctime(seconds)
+    print("Местное время:", local_time)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('$привет'):
+        time.sleep(1)
+        await message.channel.send("Привет:)!")
+    elif message.content.startswith('$пароль'):
+        time.sleep(1)
+        await message.channel.send(gen_pass(10))
+    elif message.content.startswith('$помощь'):
+        spisok = ['$привет','$пока','$время', '$совет', '$дела', '$др', '$инфа']
+        time.sleep(1)
+        await message.channel.send("Список команд:")
+        await message.channel.send(spisok)
+    elif message.content.startswith('$эмодзи'):
+        rand = random.randint(1, 4)
+        time.sleep(1)
+        if rand == 1:
+            await message.channel.send(":video_game:")
+        if rand == 2:
+            await message.channel.send(":snake:")
+        if rand == 3:
+            await message.channel.send(":page_with_curl:")
+        if rand == 4:
+            await message.channel.send(":hot_face:")
+    elif message.content.startswith('$совет'):
+        randd = random.randint(1, 5)
+        time.sleep(1)
+        if randd == 1:
+            await message.channel.send("Нужно пить 2 литра воды в день!")
+        if randd == 2:
+            await message.channel.send("Ешьте примерно 4 раза в течении дня!")
+        if randd == 3:
+            await message.channel.send("Рекомендуется обнять любимого человека 5 раз!")
+        if randd == 4:
+            await message.channel.send("Надо спать больше 8 часов в сутки!")
+        if randd == 5:
+            await message.channel.send("Так же необходимо больше двигаться!")
+    elif message.content.startswith('$дела'):
+        randdd = random.randint(1, 5)
+        time.sleep(1)
+        if randdd == 1:
+            await message.channel.send("Пропылесосели? Помойте полы!")
+        if randdd == 2:
+            await message.channel.send("Протёрли окна? Пропылесосьте!")
+        if randdd == 3:
+            await message.channel.send("Помыли полы? Помойте посуду!")
+        if randdd == 4:
+            await message.channel.send("Помыли посуду? Протрите окна!")
+        if randdd == 5:
+            await message.channel.send("Сделали все дела? Отдыхайте!")
+    elif message.content.startswith('$др'):
+        time.sleep(1)
+        await message.channel.send("Мой день рождения: 24.04.2023")
+        await message.channel.send("^-^")
+    elif message.content.startswith('$инфа'):
+        time.sleep(1)
+        await message.channel.send("Я родился 15.04.2023!")
+        time.sleep(1)
+        await message.channel.send("Мой хозяин создал меня в 11 лет!")
+        time.sleep(1)
+        await message.channel.send("Я создан для выполнения разных команд, ведь мне это приносит радость^-^!")
+        time.sleep(1)
+        await message.channel.send("Написан я на Python!")
+        
+
+
+
+client.run("")
